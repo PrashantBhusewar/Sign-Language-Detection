@@ -11,6 +11,17 @@ Communication is the act of sharing or exchanging information, ideas or feelings
 
 One can build a model based on deep-learning Computer Vision to overcome this barrier. A model can be trained to recognize different gestures of sign language and translate them into English. This will help a lot of people in communicating and conversing with deaf and dumb people. This is an object detection solution which can detect various sign language activity.
 
+
+## *Scope of Application*
+
+A sign Language recognition system could be used at reception desks or during video conferences to allow signing people to speak with people who don't know Sign Language.
+
+
+## *Cost Involved*
+- Model Training Cost
+- Model Storing Cost
+- Deployment Cost
+
 ## *Tech Stack Used*
 - Python
 - Flask
