@@ -5,15 +5,19 @@ from sign_language.exception import SignException
 from sign_language.components.data_ingestion import DataIngestion
 from sign_language.components.data_validation import DataValidation
 from sign_language.components.model_trainer import ModelTrainer
+from sign_language.components.model_pusher import ModelPusher
+from sign_language.configuration.s3_operations import S3Operation
 
 
 from sign_language.entity.config_entity import (DataIngestionConfig,
                                                 DataValidationConfig,
-                                                ModelTrainerConfig)
+                                                ModelTrainerConfig,
+                                                ModelPusherConfig)
 
 from sign_language.entity.artifact_entity import (DataIngestionArtifact,
                                                   DataValidationArtifact,
-                                                  ModelTrainerArtifact)
+                                                  ModelTrainerArtifact,
+                                                  ModelPusherArtifacts)
 
 
 
@@ -22,6 +26,8 @@ class TrainPipeline:
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidationConfig()
         self.model_trainer_config = ModelTrainerConfig()
+        self.model_pusher_config = ModelPusherConfig()
+        self.s3_operations = S3Operation()
 
     
     def start_data_ingestion(self) -> DataIngestionArtifact:
@@ -85,15 +91,33 @@ class TrainPipeline:
 
 
 
+    def start_model_pusher(self, model_trainer_artifact: ModelTrainerArtifact, s3: S3Operation):
+
+        try:
+            model_pusher = ModelPusher(
+                model_pusher_config=self.model_pusher_config,
+                model_trainer_artifact= model_trainer_artifact,
+                s3=s3
+                
+            )
+            model_pusher_artifact = model_pusher.initiate_model_pusher()
+            return model_pusher_artifact
+        except Exception as e:
+            raise SignException(e, sys)
+
+
+
     def run_pipeline(self,) -> None:
         try:
             data_ingestion_artifact = self.start_data_ingestion()
             data_validation_artifact = self.start_data_validation(
                 data_ingestion_artifact=data_ingestion_artifact
             )
-            
+
             if data_validation_artifact.validation_status == True:
                 model_trainer_artifact = self.start_model_trainer()
+                model_pusher_artifact = self.start_model_pusher(model_trainer_artifact=model_trainer_artifact,s3=self.s3_operations)
+            
 
             else:
                 raise Exception("Your data is not in correct format")
