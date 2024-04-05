@@ -14,7 +14,7 @@ DATA_INGESTION_DIR_NAME: str = "data_ingestion"
 
 DATA_INGESTION_FEATURE_STORE_DIR: str = "feature_store"
 
-DATA_DOWNLOAD_URL: str = "https://github.com/PrashantBhusewar/dataset/raw/main/Sign_langauge_data.zip"
+DATA_DOWNLOAD_URL: str = "https://github.com/PrashantBhusewar/dataset/raw/main/Sign_language_data.zip"
 
 
 
@@ -37,7 +37,7 @@ MODEL_TRAINER_DIR_NAME: str = "model_trainer"
 
 MODEL_TRAINER_PRETRAINED_WEIGHT_NAME: str = "yolov5s.pt"
 
-MODEL_TRAINER_NO_EPOCHS: int = 500
+MODEL_TRAINER_NO_EPOCHS: int = 400
 
 MODEL_TRAINER_BATCH_SIZE: int = 16
 

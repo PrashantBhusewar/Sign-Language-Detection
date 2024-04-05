@@ -20,8 +20,8 @@ class ModelTrainer:
 
         try:
             logging.info("Unzipping data")
-            os.system("unzip Sign_langauge_data.zip")
-            os.system("rm Sign_langauge_data.zip")
+            os.system("unzip Sign_language_data.zip")
+            os.system("rm Sign_language_data.zip")
 
             with open('data.yaml', 'r') as stream:
                 num_classes = str(yaml.safe_load(stream)['nc'])
@@ -47,14 +47,14 @@ class ModelTrainer:
             os.system("rm -rf test")
             os.system("rm -rf data.yaml")
 
-            model_trainer_artifacts = ModelTrainerArtifact(
+            model_trainer_artifact = ModelTrainerArtifact(
                 trained_model_file_path="yolov5/best.pt",
             )
 
             logging.info("Exited initiate_model_trainer method of ModelTrainer class")
-            logging.info(f"Model trainer artifact: {model_trainer_artifacts}")
+            logging.info(f"Model trainer artifact: {model_trainer_artifact}")
 
-            return model_trainer_artifacts
+            return model_trainer_artifact
 
 
         except Exception as e:
